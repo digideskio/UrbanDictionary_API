@@ -3,39 +3,37 @@ var myApp = new Framework7({});
 var $$ = Dom7;
 
 // Select Template
-var template = $$('#random-template').html();
+var template = $$('#search-template').html();
 
 // Compile and render
 var compiledTemplate = Template7.compile(template);
 
-// Defined as function "getrandom"
-function getrandom() {
-  // Get JSON Data from UrbanDictionary API 
-  $$.getJSON('http://api.urbandictionary.com/v0/random', function (json) {
+function getSearch(searchstring){
+	// Get JSON Data from UrbanDictionary API by searchstring
+	$$.getJSON('http://api.urbandictionary.com/v0/define?term='+searchstring, function (json) {
+		// Insert rendered template
+		$$('#content-wrap').html(compiledTemplate(json))
+	});
+}
 
-    // Insert rendered template
-    $$('#content-wrap').html(compiledTemplate(json))
-  });
-};
-
-// Execute to list UrbanDictionary Definitions
-getrandom();
-
-// Select Pull to refresh content
-var ptrContent = $$('.pull-to-refresh-content');
-
-// On refresh
-ptrContent.on('refresh', function (e) {
-  // Emulate 1s loading
-  setTimeout(function () {
-
-    // Execute getrandom to get new Definitions
-    getrandom();
-
-    myApp.pullToRefreshDone();
-  }, 1000);
+// Initialize searchbar
+var searchstring = "";
+var mySearchbar = myApp.searchbar('.searchbar', {
+    customSearch: true,
+    onSearch: function(s) {
+        searchstring = s.query;
+    }
 });
 
+// 'Hack' to search only by pressing Enter-Key
+$('.searchbar').bind("keypress", function(e) {
+    if (e.which === 13) {
+        if (searchstring.length > 0) {
+            mySearchbar.disable();
+            getSearch(searchstring);
+        }
+    }
+});
 
 var mainView = myApp.addView('.view-main', {
   dynamicNavbar: true
