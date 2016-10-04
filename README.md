@@ -1,14 +1,9 @@
 UrbanDictionary API Demo
 ===================
 
-Simple Webapp based on the awesome Framework7 (http://www.idangero.us/framework7) to show Random Definitions from UrbanDictionary using $.getJSON and their 'hidden' API.
+Simple mobile Webapp based on the awesome Framework7 (http://www.idangero.us/framework7) to show Custom Definitions from UrbanDictionary using $.getJSON and their 'hidden' API.
 
-Pull to get new Definitions!
-
-
-Screenshot
-===================
-![Pull to Refresh](https://dl.dropboxusercontent.com/u/31870855/Forum/UrbanDicAPI2.png)
+Use the searchbar to get definitions!
 
 License
 =======
